@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arda Uzun - Sonny Mods</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ============================================ -->
+    <!-- HEADER / ABOUT ME SECTION                    -->
+    <!-- ============================================ -->
+    <header>
+        <div class="container">
+            <div class="profile">
+                <img id="avatar" src="" alt="Avatar">
+                <div class="profile-text">
+                    <h1 id="modder-name">Loading...</h1>
+                    <p id="modder-bio">Loading...</p>
+                    <div class="social-links">
+                        <a id="email-link" href="#">📧 Email</a>
+                        <a id="github-link" href="#">🐙 GitHub</a>
+                        <a id="discord-link" href="#">💬 Discord</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- MODS GALLERY                                 -->
+    <!-- ============================================ -->
+    <main>
+        <div class="container">
+            <h2>My Mods for Sonny</h2>
+            <p style="color: #8b949e; margin-bottom: 20px;">
+                Mods for Sonny (2007), Sonny 2 (2008), and Sonny 2017.
+            </p>
+            <div id="mod-grid">
+                <!-- Mods will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- ============================================ -->
+    <!-- FOOTER                                       -->
+    <!-- ============================================ -->
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="year"></span> Arda Uzun. I love modding and helping others with it too.</p>
+        </div>
+    </footer>
+
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT - Data is embedded directly       -->
+    <!-- ============================================ -->
+    <script>
+        // ------------------------------------------------------------------
+        // YOUR DATA IS RIGHT HERE - Edit this object to add/change mods
+        // ------------------------------------------------------------------
+        const siteData = {
+            modder: {
+                name: "Arda Uzun",
+                bio: "I love modding. Here are my mods for Sonny 1, 2, and 2017. I can speak German, Turkish, English and a little chinese and very poor french.",
+                avatar: "a.jpg",
+                email: "Ard4Uzun00@outlook.de",
+                github: "https://github.com/ArdaUzun-55",
+                discord: "vastolorde3"
+            },
+            mods: [
+                {
+                    id: "zpciv-revenge-mod",
+                    name: "ZPCIS Revenge Mod",
+                    game: "Sonny 2017",
+                    version: "1.0.0",
+                    description: "Reworks the entire game with new abilities, rebalanced enemies, and a harder endgame.",
+                    screenshots: [
+                        "b (1).jpg",
+                        "b (2).jpg",
+                        "b (3).jpg",
+                        "b (4).jpg"
+                    ],
+                    downloadUrl: "",
+                    downloadSize: "",
+                    dateReleased: ""
+                },
+                {
+                    id: "danielas-will",
+                    name: "Danielas WIll Sonny 1 Mod",
+                    game: "Sonny 1",
+                    version: "1.7.0",
+                    description: "This mod is a huge overhaul and includes many new mechanics.Every class is changed and inspired by FFXIV.",
+                    screenshots: [
+                        "c.png",
+                        "c2.jpg",
+                        "c3.png",
+                        "c4.png"
+                    ],
+                    downloadUrl: "https://github.com/ArdaUzun-55/Danielas-WIll-Mod-Sonny/releases/download/1.401/MOD1.swf",
+                    downloadSize: "139 MB",
+                    dateReleased: "25.09.2025"
+                },
+                {
+                    id: "danielas-will2",
+                    name: "Danielas WIll Sonny 2 Mod",
+                    game: "Sonny 2",
+                    version: "2.0.1",
+                    description: "A big overhaul for Sonny 2. Similar to it's prequel it includes many new mechanics! It also adds 4 new classes and one new Zone!",
+                    screenshots: [
+                        "d.png",
+                        "d2.jpg",
+                        "d3.png",
+                        "d4.png"
+                    ],
+                    downloadUrl: "https://github.com/ArdaUzun-55/Danielas-WIll-Mod-Sonny/releases/download/1.401/MOD5.swf",
+                    downloadSize: "187 MB",
+                    dateReleased: "19.11.2025"
+                }
+                // Add more mods here, separated by commas
+                // {
+                //     id: "sonny-2-hardcore",
+                //     name: "Sonny 2 Hardcore Mod",
+                //     game: "Sonny 2",
+                //     version: "2.0.1",
+                //     description: "Makes Sonny 2 significantly harder.",
+                //     screenshots: ["screenshot1.jpg", "screenshot2.jpg"],
+                //     downloadUrl: "https://www.mediafire.com/file/xyz/",
+                //     downloadSize: "15 MB",
+                //     dateReleased: "2026-07-20"
+                // }
+            ]
+        };
+
+        // ------------------------------------------------------------------
+        // POPULATE THE PAGE
+        // ------------------------------------------------------------------
+        // 1. About Me section
+        document.getElementById('modder-name').textContent = siteData.modder.name;
+        document.getElementById('modder-bio').textContent = siteData.modder.bio;
+        document.getElementById('avatar').src = siteData.modder.avatar;
+
+        document.getElementById('email-link').href = 'mailto:' + siteData.modder.email;
+        document.getElementById('github-link').href = siteData.modder.github;
+
+        // Discord handling
+        const discordLink = document.getElementById('discord-link');
+        if (siteData.modder.discord && !isNaN(siteData.modder.discord)) {
+            discordLink.href = 'https://discord.com/users/' + siteData.modder.discord;
+        } else if (siteData.modder.discord) {
+            discordLink.href = '#';
+            discordLink.textContent = '💬 ' + siteData.modder.discord + ' (on Discord)';
+        }
+
+        // 2. Mod cards
+        const grid = document.getElementById('mod-grid');
+        grid.innerHTML = '';
+
+        if (siteData.mods.length === 0) {
+            grid.innerHTML = '<p style="color: #8b949e;">No mods released yet. Check back soon!</p>';
+        } else {
+            siteData.mods.forEach(mod => {
+                // Screenshots
+                let screenshotsHTML = '';
+                if (mod.screenshots && mod.screenshots.length > 0) {
+                    screenshotsHTML = '<div class="screenshots">';
+                    mod.screenshots.forEach(img => {
+                        screenshotsHTML += `<img src="${img}" alt="${mod.name} screenshot" loading="lazy">`;
+                    });
+                    screenshotsHTML += '</div>';
+                }
+
+                // Download button or Coming Soon
+                let downloadHTML = '';
+                if (mod.downloadUrl && mod.downloadUrl !== '') {
+                    downloadHTML = `<a href="${mod.downloadUrl}" class="download-btn" target="_blank">⬇ Download ${mod.downloadSize ? '(' + mod.downloadSize + ')' : ''}</a>`;
+                } else {
+                    downloadHTML = `<span class="coming-soon">🚧 Coming Soon</span>`;
+                }
+
+                // Version
+                let versionHTML = '';
+                if (mod.version && mod.version !== '') {
+                    versionHTML = `<span class="mod-version">v${mod.version}</span>`;
+                }
+
+                // Date
+                let dateHTML = '';
+                if (mod.dateReleased && mod.dateReleased !== '') {
+                    dateHTML = `<span class="mod-date">📅 ${mod.dateReleased}</span>`;
+                }
+
+                // Build the card - NOW WITH VIEW DETAILS BUTTON
+                const card = document.createElement('div');
+                card.className = 'mod-card';
+                card.innerHTML = `
+                    <div class="mod-header">
+                        <h3><a href="mods/${mod.id}.html" style="color: #f0f6fc; text-decoration: none;">${mod.name}</a></h3>
+                        ${versionHTML}
+                    </div>
+                    <div class="mod-meta">
+                        <span class="mod-game">🎮 ${mod.game}</span>
+                        ${dateHTML}
+                    </div>
+                    <p class="mod-description">${mod.description}</p>
+                    ${screenshotsHTML}
+                    <div class="mod-actions">
+                        <a href="mods/${mod.id}.html" class="view-btn">📖 View Details</a>
+                        ${downloadHTML}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // 3. Footer year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        console.log('✅ Site loaded successfully! Data:', siteData);
+    </script>
+
+</body>
+</html>

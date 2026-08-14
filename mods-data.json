@@ -1,0 +1,26 @@
+{
+  "modder": {
+    "name": "Arda Uzun",
+    "bio": "I love modding. Here are my mods for Sonny 1, 2, and 2017.",
+    "avatar": "https://via.placeholder.com/150",
+    "email": "Ard4Uzun00@outlook.de",
+    "github": "https://github.com/ArdaUzun-55",
+    "discord": "Arda"
+  },
+  "mods": [
+    {
+      "id": "zpciv-revenge-mod",
+      "name": "ZPCIS Revenge Mod",
+      "game": "Sonny 2017",
+      "version": "1.0.0",
+      "description": "Reworks the entire game with new abilities, rebalanced enemies, and a harder endgame.",
+      "screenshots": [
+        "https://via.placeholder.com/400x200/333/fff?text=Screenshot+1",
+        "https://via.placeholder.com/400x200/444/fff?text=Screenshot+2"
+      ],
+      "downloadUrl": "",
+      "downloadSize": "",
+      "dateReleased": ""
+    }
+  ]
+}
