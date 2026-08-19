@@ -228,3 +228,22 @@ footer {
         gap: 4px;
     }
 }
+/* ------------------------------------------------------------------
+   YOUTUBE BUTTON
+   ------------------------------------------------------------------ */
+.youtube-btn {
+    display: inline-block;
+    background: #ff0000;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-align: center;
+    transition: background 0.2s;
+}
+
+.youtube-btn:hover {
+    background: #cc0000;
+}
