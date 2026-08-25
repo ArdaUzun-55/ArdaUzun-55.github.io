@@ -247,3 +247,93 @@ footer {
 .youtube-btn:hover {
     background: #cc0000;
 }
+/* ------------------------------------------------------------------
+   BLOG CARDS
+   ------------------------------------------------------------------ */
+.blog-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+}
+
+.blog-card:hover {
+    border-color: #58a6ff;
+}
+
+.blog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.blog-header h3 {
+    font-size: 1.3rem;
+    color: #f0f6fc;
+}
+
+.blog-date {
+    color: #8b949e;
+    font-size: 0.9rem;
+}
+
+.blog-tags {
+    margin-bottom: 10px;
+}
+
+.tag {
+    background: #21262d;
+    padding: 2px 10px;
+    border-radius: 20px;
+    color: #58a6ff;
+    font-size: 0.8rem;
+    margin-right: 6px;
+}
+
+.blog-excerpt {
+    color: #c9d1d9;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.blog-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Blog post content */
+#post-content {
+    color: #c9d1d9;
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+#post-content h2, #post-content h3, #post-content h4 {
+    color: #f0f6fc;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+#post-content ul, #post-content ol {
+    padding-left: 25px;
+    margin: 10px 0;
+}
+
+#post-content blockquote {
+    border-left: 3px solid #58a6ff;
+    padding-left: 15px;
+    color: #8b949e;
+    margin: 15px 0;
+}
+
+#post-content code {
+    background: #0d1117;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+}

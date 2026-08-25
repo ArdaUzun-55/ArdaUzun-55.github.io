@@ -22,5 +22,18 @@
       "downloadSize": "",
       "dateReleased": ""
     }
+  ],
+  "blog": [
+    {
+      "id": "strain-dilemma",
+      "title": "Diilemma regarding Strains",
+      "date": "2026-08-23",
+      "excerpt": "Balancing and strain identity...is it right?",
+      "content": "Full blog post content goes here...",
+      "tags": [
+        "Sonny",
+        "Modding"
+      ]
+    }
   ]
 }

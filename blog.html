@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Arda Uzun</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header (Same as index.html) -->
+    <header>
+        <div class="container">
+            <div class="profile">
+                <img id="avatar" src="" alt="Avatar">
+                <div class="profile-text">
+                    <h1 id="modder-name">Loading...</h1>
+                    <p id="modder-bio">Loading...</p>
+                    <div class="social-links">
+                        <a id="email-link" href="#">📧 Email</a>
+                        <a id="github-link" href="#">🐙 GitHub</a>
+                        <a id="discord-link" href="#">💬 Discord</a>
+                        <a href="index.html">🎮 Mods</a>
+                        <a href="blog.html" style="color: #f0f6fc;">📝 Blog</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Blog Section -->
+    <main>
+        <div class="container">
+            <h2>📝 Blog</h2>
+            <p style="color: #8b949e; margin-bottom: 20px;">
+                Thoughts, tutorials, and updates about my modding journey.
+            </p>
+            <div id="blog-grid">
+                <!-- Blog posts will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="year"></span> Arda Uzun.  I love modding and helping others with it too.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ------------------------------------------------------------------
+        // LOAD DATA
+        // ------------------------------------------------------------------
+        
+        fetch('mods-data.json')
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to load data');
+                return response.json();
+            })
+            .then(data => {
+                // Populate header
+                document.getElementById('modder-name').textContent = data.modder.name;
+                document.getElementById('modder-bio').textContent = data.modder.bio;
+                document.getElementById('avatar').src = data.modder.avatar;
+                document.getElementById('email-link').href = 'mailto:' + data.modder.email;
+                document.getElementById('github-link').href = data.modder.github;
+
+                // Discord link
+                const discordLink = document.getElementById('discord-link');
+                if (data.modder.discord && !isNaN(data.modder.discord)) {
+                    discordLink.href = 'https://discord.com/users/' + data.modder.discord;
+                } else if (data.modder.discord) {
+                    discordLink.href = '#';
+                    discordLink.textContent = '💬 ' + data.modder.discord + ' (on Discord)';
+                }
+
+                // Render blog posts
+                const grid = document.getElementById('blog-grid');
+                grid.innerHTML = '';
+
+                if (!data.blog || data.blog.length === 0) {
+                    grid.innerHTML = '<p style="color: #8b949e;">No blog posts yet. Check back soon!</p>';
+                    return;
+                }
+
+                // Sort posts by date (newest first)
+                const posts = data.blog.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                posts.forEach(post => {
+                    const card = document.createElement('div');
+                    card.className = 'blog-card';
+                    card.innerHTML = `
+                        <div class="blog-header">
+                            <h3><a href="blog-post.html?id=${post.id}" style="color: #f0f6fc; text-decoration: none;">${post.title}</a></h3>
+                            <span class="blog-date">${post.date}</span>
+                        </div>
+                        <div class="blog-tags">
+                            ${post.tags ? post.tags.map(tag => `<span class="tag">#${tag}</span>`).join('') : ''}
+                        </div>
+                        <p class="blog-excerpt">${post.excerpt}</p>
+                        <div class="blog-actions">
+                            <a href="blog-post.html?id=${post.id}" class="view-btn">📖 Read More</a>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('blog-grid').innerHTML = 
+                    '<p style="color: #ff6b6b;">Error loading blog posts. Check console for details.</p>';
+            });
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+
+</body>
+</html>

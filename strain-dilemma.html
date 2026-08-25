@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post - Arda Uzun</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div style="margin-bottom: 15px;">
+                <a href="blog.html" style="color: #58a6ff; text-decoration: none; font-size: 1.1rem;">← Back to Blog</a>
+                <a href="index.html" style="color: #58a6ff; text-decoration: none; font-size: 1.1rem; margin-left: 15px;">← Back to Mods</a>
+            </div>
+            <div class="profile">
+                <img id="avatar" src="" alt="Avatar" style="width:80px; height:80px; border-radius:50%; border:2px solid #58a6ff; object-fit:cover;">
+                <div class="profile-text">
+                    <h1 id="post-title" style="font-size: 1.8rem;">Loading...</h1>
+                    <p id="post-date" style="color: #8b949e;">Loading...</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <main>
+        <div class="container">
+            <div style="background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 30px;">
+                <div id="post-tags" style="margin-bottom: 20px;"></div>
+                <div id="post-content" style="color: #c9d1d9; font-size: 1.05rem; line-height: 1.8;">
+                    Loading...
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="year"></span> Arda Uzun. I love modding and helping others with it too.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ------------------------------------------------------------------
+        // GET POST ID FROM URL
+        // ------------------------------------------------------------------
+        const urlParams = new URLSearchParams(window.location.search);
+        const postId = urlParams.get('id');
+
+        if (!postId) {
+            document.getElementById('post-title').textContent = '❌ No post specified';
+            document.getElementById('post-content').textContent = 'Please specify a post ID in the URL (e.g., ?id=my-first-post)';
+        } else {
+            fetch('mods-data.json')
+                .then(response => {
+                    if (!response.ok) throw new Error('Failed to load data');
+                    return response.json();
+                })
+                .then(data => {
+                    // Find the post
+                    const post = data.blog.find(p => p.id === postId);
+
+                    if (!post) {
+                        document.getElementById('post-title').textContent = '❌ Post not found';
+                        document.getElementById('post-content').textContent = `No blog post found with ID: ${postId}`;
+                        return;
+                    }
+
+                    // Populate header
+                    document.getElementById('avatar').src = data.modder.avatar;
+                    document.getElementById('post-title').textContent = post.title;
+                    document.getElementById('post-date').textContent = post.date;
+
+                    // Tags
+                    if (post.tags && post.tags.length > 0) {
+                        document.getElementById('post-tags').innerHTML = post.tags.map(tag =>
+                            `<span class="tag" style="background: #21262d; padding: 4px 12px; border-radius: 20px; color: #58a6ff; margin-right: 8px; font-size: 0.85rem;">#${tag}</span>`
+                        ).join('');
+                    }
+
+                    // Content (supports line breaks)
+                    document.getElementById('post-content').innerHTML = post.content.replace(/\n/g, '<br>');
+
+                    // Update page title
+                    document.title = `${post.title} - Arda Uzun`;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('post-content').textContent = 'Error loading blog post.';
+                });
+        }
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+
+</body>
+</html>
