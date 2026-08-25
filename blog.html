@@ -8,18 +8,18 @@
 </head>
 <body>
 
-    <!-- Header (Same as index.html) -->
+    <!-- Header -->
     <header>
         <div class="container">
             <div class="profile">
-                <img id="avatar" src="" alt="Avatar">
+                <img id="avatar" src="a.jpg" alt="Avatar">
                 <div class="profile-text">
-                    <h1 id="modder-name">Loading...</h1>
-                    <p id="modder-bio">Loading...</p>
+                    <h1>Arda Uzun</h1>
+                    <p>I love modding. Here are my mods for Sonny 1, 2, and 2017.</p>
                     <div class="social-links">
-                        <a id="email-link" href="#">📧 Email</a>
-                        <a id="github-link" href="#">🐙 GitHub</a>
-                        <a id="discord-link" href="#">💬 Discord</a>
+                        <a href="mailto:Ard4Uzun00@outlook.de">📧 Email</a>
+                        <a href="https://github.com/ArdaUzun-55">🐙 GitHub</a>
+                        <a href="#">💬 vastolorde3 (on Discord)</a>
                         <a href="index.html">🎮 Mods</a>
                         <a href="blog.html" style="color: #f0f6fc;">📝 Blog</a>
                     </div>
@@ -28,15 +28,16 @@
         </div>
     </header>
 
-    <!-- Blog Section -->
+    <!-- Blog Listing -->
     <main>
         <div class="container">
             <h2>📝 Blog</h2>
             <p style="color: #8b949e; margin-bottom: 20px;">
-                Thoughts, tutorials, and updates about my modding journey.
+                Sharing my thoughts with y'all. To give context for some of my modding decisions.
             </p>
+
             <div id="blog-grid">
-                <!-- Blog posts will be inserted here by JavaScript -->
+                <!-- Blog cards will go here -->
             </div>
         </div>
     </main>
@@ -44,73 +45,55 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; <span id="year"></span> Arda Uzun.  I love modding and helping others with it too.</p>
+            <p>&copy; <span id="year"></span> Arda Uzun. I love modding and helping others with it too.</p>
         </div>
     </footer>
 
     <script>
         // ------------------------------------------------------------------
-        // LOAD DATA
+        // YOUR BLOG POSTS - Just list them here
         // ------------------------------------------------------------------
-        
-        fetch('mods-data.json')
-            .then(response => {
-                if (!response.ok) throw new Error('Failed to load data');
-                return response.json();
-            })
-            .then(data => {
-                // Populate header
-                document.getElementById('modder-name').textContent = data.modder.name;
-                document.getElementById('modder-bio').textContent = data.modder.bio;
-                document.getElementById('avatar').src = data.modder.avatar;
-                document.getElementById('email-link').href = 'mailto:' + data.modder.email;
-                document.getElementById('github-link').href = data.modder.github;
+        const blogPosts = [
+            {
+                id: "strain-dilemma",
+                title: "Diilemma regarding Strains",
+                date: "2026-08-25",
+                excerpt: "Balancing and strain identity... is it right?",
+                tags: ["Sonny", "Modding"]
+            }
+            // Add more posts here
+        ];
 
-                // Discord link
-                const discordLink = document.getElementById('discord-link');
-                if (data.modder.discord && !isNaN(data.modder.discord)) {
-                    discordLink.href = 'https://discord.com/users/' + data.modder.discord;
-                } else if (data.modder.discord) {
-                    discordLink.href = '#';
-                    discordLink.textContent = '💬 ' + data.modder.discord + ' (on Discord)';
-                }
+        // ------------------------------------------------------------------
+        // RENDER BLOG CARDS
+        // ------------------------------------------------------------------
+        const grid = document.getElementById('blog-grid');
+        grid.innerHTML = '';
 
-                // Render blog posts
-                const grid = document.getElementById('blog-grid');
-                grid.innerHTML = '';
+        if (blogPosts.length === 0) {
+            grid.innerHTML = '<p style="color: #8b949e;">No blog posts yet. Check back soon!</p>';
+        } else {
+            const posts = blogPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-                if (!data.blog || data.blog.length === 0) {
-                    grid.innerHTML = '<p style="color: #8b949e;">No blog posts yet. Check back soon!</p>';
-                    return;
-                }
-
-                // Sort posts by date (newest first)
-                const posts = data.blog.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-                posts.forEach(post => {
-                    const card = document.createElement('div');
-                    card.className = 'blog-card';
-                    card.innerHTML = `
-                        <div class="blog-header">
-                            <h3><a href="blog-post.html?id=${post.id}" style="color: #f0f6fc; text-decoration: none;">${post.title}</a></h3>
-                            <span class="blog-date">${post.date}</span>
-                        </div>
-                        <div class="blog-tags">
-                            ${post.tags ? post.tags.map(tag => `<span class="tag">#${tag}</span>`).join('') : ''}
-                        </div>
-                        <p class="blog-excerpt">${post.excerpt}</p>
-                        <div class="blog-actions">
-                            <a href="blog-post.html?id=${post.id}" class="view-btn">📖 Read More</a>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-                });
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('blog-grid').innerHTML = 
-                    '<p style="color: #ff6b6b;">Error loading blog posts. Check console for details.</p>';
+            posts.forEach(post => {
+                const card = document.createElement('div');
+                card.className = 'blog-card';
+                card.innerHTML = `
+                    <div class="blog-header">
+                        <h3><a href="blog/${post.id}.html" style="color: #f0f6fc; text-decoration: none;">${post.title}</a></h3>
+                        <span class="blog-date">${post.date}</span>
+                    </div>
+                    <div class="blog-tags">
+                        ${post.tags ? post.tags.map(tag => `<span class="tag">#${tag}</span>`).join('') : ''}
+                    </div>
+                    <p class="blog-excerpt">${post.excerpt}</p>
+                    <div class="blog-actions">
+                        <a href="blog/${post.id}.html" class="view-btn">📖 Read More</a>
+                    </div>
+                `;
+                grid.appendChild(card);
             });
+        }
 
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
